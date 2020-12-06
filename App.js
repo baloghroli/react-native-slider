@@ -11,8 +11,8 @@ import {
 const App = () => {
   const [sliderDimensions, setSliderDimensions] = useState({
     height: null,
-    start: null,
-    end: null,
+    top: null,
+    bottom: null,
   });
 
   const stepperAnim = useRef(new Animated.Value(0)).current;
@@ -25,7 +25,7 @@ const App = () => {
       railFillAnim.setOffset(railFillAnim._value);
     },
     onPanResponderMove: (evt, {dy, moveY}) => {
-      if (moveY > sliderDimensions.start && moveY < sliderDimensions.end) {
+      if (moveY > sliderDimensions.top && moveY < sliderDimensions.bottom) {
         stepperAnim.setValue(dy);
         railFillAnim.setValue(-dy);
       }
@@ -44,9 +44,9 @@ const App = () => {
         onLayout={(evt) => {
           const {height, y} = evt.nativeEvent.layout;
           setSliderDimensions({
-            start: y,
             height: height,
-            end: y + height,
+            top: y,
+            bottom: y + height,
           });
         }}>
         <View style={styles.rail}>
